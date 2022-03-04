@@ -1,17 +1,12 @@
-package com.example.thuongmai.model.user;
+package com.example.thuongmai.model;
 
-import com.example.thuongmai.model.Comment;
-import com.example.thuongmai.model.Message;
-import com.example.thuongmai.model.Notification;
-import com.example.thuongmai.model.OrderProduct;
-import com.example.thuongmai.model.Role;
-import com.example.thuongmai.model.RoomChat;
 import com.example.thuongmai.model.shop.MyShop;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -64,7 +59,7 @@ public class User {
     @JoinTable(name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     public User(String name, String email, String username, String password) {
         this.name = name;

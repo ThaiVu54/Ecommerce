@@ -1,6 +1,5 @@
 package com.example.thuongmai.model;
 
-import com.example.thuongmai.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;

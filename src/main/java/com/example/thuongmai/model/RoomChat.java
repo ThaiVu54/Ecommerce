@@ -1,7 +1,7 @@
 package com.example.thuongmai.model;
 
 import com.example.thuongmai.model.shop.Shop;
-import com.example.thuongmai.model.user.User;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,11 +1,13 @@
 package com.example.thuongmai.model.cart;
 
-import com.example.thuongmai.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
+import com.example.thuongmai.model.User;
+
 import java.util.List;
 
 @Entity

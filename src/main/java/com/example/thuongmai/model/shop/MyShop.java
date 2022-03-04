@@ -1,7 +1,7 @@
 package com.example.thuongmai.model.shop;
 
 import com.example.thuongmai.enums.EnumFollowShop;
-import com.example.thuongmai.model.user.User;
+import com.example.thuongmai.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
