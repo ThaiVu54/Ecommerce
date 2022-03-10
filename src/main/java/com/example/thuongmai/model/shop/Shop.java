@@ -2,8 +2,8 @@ package com.example.thuongmai.model.shop;
 
 import com.example.thuongmai.enums.EnumShop;
 import com.example.thuongmai.enums.EnumShopType;
-import com.example.thuongmai.model.Product;
-import com.example.thuongmai.model.RoomChat;
+import com.example.thuongmai.model.product.Product;
+import com.example.thuongmai.model.roomchat.RoomChat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,10 +13,10 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class Shop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

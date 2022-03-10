@@ -1,5 +1,7 @@
-package com.example.thuongmai.model.cart;
+package com.example.thuongmai.model.roomchat;
 
+import com.example.thuongmai.model.message.Message;
+import com.example.thuongmai.model.shop.Shop;
 import com.example.thuongmai.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,14 +14,15 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Cart {
+public class RoomChat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Long totalMoney;
-    @OneToMany(mappedBy = "cart")
-    private List<ItemCart> itemCarts;
-    @OneToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = Shop.class)
+    private Shop shop;
+    @OneToMany(mappedBy = "roomChat")
+    private List<Message> messages;
+    @ManyToOne(targetEntity = User.class)
     private User user;
 }

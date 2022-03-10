@@ -1,6 +1,7 @@
-package com.example.thuongmai.model.cart;
+package com.example.thuongmai.model.origin;
 
-import com.example.thuongmai.model.user.User;
+import com.example.thuongmai.model.product.Product;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,14 +13,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Cart {
+public class Origin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Long totalMoney;
-    @OneToMany(mappedBy = "cart")
-    private List<ItemCart> itemCarts;
-    @OneToOne(targetEntity = User.class)
-    private User user;
+    @OneToMany(mappedBy = "origin")
+    @JsonIgnore
+    private List<Product> products;
 }

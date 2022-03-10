@@ -1,8 +1,7 @@
 package com.example.thuongmai.model.cart;
 
-import com.example.thuongmai.model.OrderProduct;
-import com.example.thuongmai.model.Product;
-import com.example.thuongmai.model.cart.Cart;
+import com.example.thuongmai.model.order.OrderProduct;
+import com.example.thuongmai.model.product.Product;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,4 +31,3 @@ public class ItemCart {
     @ManyToOne(targetEntity = OrderProduct.class)
     private OrderProduct orderProduct;
 }
-

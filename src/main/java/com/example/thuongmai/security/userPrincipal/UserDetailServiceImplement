@@ -1,6 +1,0 @@
-package com.example.thuongmai.userPrincipal
-
-@Service
-public class UserDetailsServiceImpl implements UserDetailsService{
-    
-}

@@ -1,5 +1,7 @@
-package com.example.thuongmai.model.cart;
+package com.example.thuongmai.model.order;
 
+import com.example.thuongmai.enums.EnumOrder;
+import com.example.thuongmai.model.cart.ItemCart;
 import com.example.thuongmai.model.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,14 +14,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Cart {
+public class OrderProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Long totalMoney;
-    @OneToMany(mappedBy = "cart")
+    private String phone;
+    private String address;
+    private String email;
+    private Long moneyOrder;
+    private EnumOrder enumOrder;
+    @OneToMany(mappedBy = "orderProduct")
     private List<ItemCart> itemCarts;
-    @OneToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class)
     private User user;
 }
