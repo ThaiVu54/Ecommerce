@@ -75,7 +75,7 @@ public class ShopController {
                 userOptional.get().getRoles().add(new Role(3L, EnumRoles.ROLE_PROVIDER));
             }
             if (check == 2 && userOptional.get().getShops().size() >= 5) {
-                return new ResponseEntity<>("Đã đạt giới hạn tạo shop",HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>("Đã đạt giới hạn tạo shop", HttpStatus.NO_CONTENT);
             }
             Shop shop = new Shop();
             shop.setName(shopCreate.getName());
@@ -96,4 +96,25 @@ public class ShopController {
         }
         return new ResponseEntity<>("Hãy trở thành VIP để tạo thêm shop mới", HttpStatus.NO_CONTENT);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteShop(@PathVariable Long id) {
+        shopService.deleteById(id);
+        Optional<Shop> currentShop = shopService.findById(id);
+        if (!currentShop.isPresent()){
+            return new ResponseEntity<>("xoá shop thành công",HttpStatus.OK);
+        }
+        return new ResponseEntity<>("xoá không thành công", HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/shop/{id}")
+    public ResponseEntity<Shop> findShopById(@PathVariable Long id){
+        Optional<Shop> currentShop = shopService.findById(id);
+        if (!currentShop.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(currentShop.get(), HttpStatus.OK);
+    }
+
+
 }
