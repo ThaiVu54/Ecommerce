@@ -8,6 +8,7 @@ import com.example.thuongmai.enums.EnumRoles;
 import com.example.thuongmai.enums.EnumShop;
 import com.example.thuongmai.enums.EnumShopType;
 import com.example.thuongmai.model.dto.shop.ShopCreate;
+import com.example.thuongmai.model.dto.shop.ShopFollow;
 import com.example.thuongmai.model.role.Role;
 import com.example.thuongmai.model.shop.MyShop;
 import com.example.thuongmai.model.shop.Shop;
@@ -39,6 +40,7 @@ public class ShopController {
         return new ResponseEntity<>(shopService.findAll(), HttpStatus.OK);
     }
 
+    //tim shop tu myshop
     @GetMapping("/{id}")
     public ResponseEntity<MyShop> findById(@PathVariable("id") Long id) {
         Optional<MyShop> currentMyShop = myShopService.findById(id);
@@ -101,20 +103,60 @@ public class ShopController {
     public ResponseEntity<?> deleteShop(@PathVariable Long id) {
         shopService.deleteById(id);
         Optional<Shop> currentShop = shopService.findById(id);
-        if (!currentShop.isPresent()){
-            return new ResponseEntity<>("xoá shop thành công",HttpStatus.OK);
+        if (!currentShop.isPresent()) {
+            return new ResponseEntity<>("xoá shop thành công", HttpStatus.OK);
         }
         return new ResponseEntity<>("xoá không thành công", HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/shop/{id}")
-    public ResponseEntity<Shop> findShopById(@PathVariable Long id){
+    public ResponseEntity<Shop> findShopById(@PathVariable Long id) {
         Optional<Shop> currentShop = shopService.findById(id);
-        if (!currentShop.isPresent()){
+        if (!currentShop.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(currentShop.get(), HttpStatus.OK);
     }
 
-
+    @PutMapping("/follow")
+    public ResponseEntity<?> followShop(@RequestBody ShopFollow shopFollow) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<User> currentUser = userService.findByUsername(userDetails.getUsername());
+        if (!currentUser.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        for (int i = 0; i < currentUser.get().getShops().size(); i++) {
+            MyShop myShop = currentUser.get().getShops().get(i);
+            Shop shop = myShop.getShop();
+            if (shop.getId().equals(shopFollow.getShop().getId())) {
+                return new ResponseEntity<>(myShop, HttpStatus.OK);
+            }
+        }
+        shopFollow.getShop().setCountFollow(shopFollow.getShop().getCountFollow() + 1);
+        shopService.save(shopFollow.getShop());
+        MyShop myShop = myShopService.save(new MyShop());
+        myShop.setShop(shopFollow.getShop());
+        myShop.setUser(currentUser.get());
+        myShop.setFollowOrOwner(EnumFollowShop.FOLLOW);
+        currentUser.get().getShops().add(myShop);
+        userService.save(currentUser.get());
+        return new ResponseEntity<>(myShopService.save(myShop), HttpStatus.ACCEPTED);
+    }
+    @PutMapping("/withdraw/{id}")
+    public ResponseEntity<?> withDrawByShop(@PathVariable Long id){
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication()
+                .getPrincipal();
+        String username = userDetails.getUsername();
+        Optional<User> currentUser = userService.findByUsername(username);
+        if (!currentUser.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Optional<Shop> currentShop = shopService.findById(id);
+        if (!currentShop.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        currentUser.get().setWallet(currentUser.get().getLockWallet()+currentShop.get().getTurnover());
+        currentShop.get().setTurnover(0L);
+        return new ResponseEntity<>(userService.save(currentUser.get()),HttpStatus.ACCEPTED);
+    }
 }
