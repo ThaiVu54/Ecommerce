@@ -1,7 +1,7 @@
 package com.example.thuongmai.Service.myshop;
 
 import com.example.thuongmai.model.shop.MyShop;
-import com.example.thuongmai.repository.myshop.IMyShopRepository;
+import com.example.thuongmai.repository.IMyShopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
