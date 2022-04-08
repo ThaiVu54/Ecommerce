@@ -1,6 +1,7 @@
 package com.example.thuongmai.model.notification;
 
 import com.example.thuongmai.model.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class Notification {
     private String url;
     private Boolean status;
     @JsonIgnore
-    @ManyToOne(targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonBackReference
     private User user;
 }
